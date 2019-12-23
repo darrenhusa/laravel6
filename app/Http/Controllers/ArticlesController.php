@@ -17,18 +17,28 @@ class ArticlesController extends Controller
     public function show($id)
     {
       // dd($articleId);
-      $article = \App\Article::find($id);
+      $article = Article::find($id);
       // return $article;
       return view('articles.show', compact('article'));
     }
 
     public function create()
     {
-
+      return view('articles.create');
     }
     public function store()
     {
+      $article = new Article();
 
+      $article->title = request('title');
+      $article->excerpt = request('excerpt');
+      $article->body = request('body');
+
+      $article->save();
+
+      return redirect('/articles');
+
+      // dd(request()->all());
     }
 
     public function edit()
