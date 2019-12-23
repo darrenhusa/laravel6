@@ -1,19 +1,28 @@
 @extends ('layout')
 
 @section ('content')
-<div id="wrapper">
+  <div id="wrapper">
     <div id="page" class="container">
-        <div id="content">
-            <div class="title">
+      @foreach ($articles as $article)
+          <div id="content">
+              <div class="title">
+                  <h2>
+                    <a href="/articles/{{ $article->id }}">
+                      {{ $article->title }}
+                    </a>
+                  </h2>
+                </div>
 
-              @foreach ($articles as $article)
-                <h2>
-                  <a href="/articles/{{ $article->id }}">{{ $article->title }}</a>
-                </h2>
-                <p><img src="/images/banner.jpg" alt="" class="image image-full" /> </p>
-                {{ $article->body }}
-              @endforeach
-        </div>
-      </div>
-</div>
+                <p>
+                  <img
+                  src="/images/banner.jpg"
+                  alt=""
+                  class="image image-full" />
+                </p>
+
+                {{ $article->excerpt }}
+            </div>
+      @endforeach
+    </div>
+  </div>
 @endsection
