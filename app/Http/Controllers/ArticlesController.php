@@ -18,7 +18,7 @@ class ArticlesController extends Controller
       {
         $articles = Article::latest()->get();
       }
-      
+
       // return $articles;
       return view('articles.index', compact('articles'));
     }
@@ -30,12 +30,20 @@ class ArticlesController extends Controller
 
     public function create()
     {
-      return view('articles.create');
+      $tags = Tag::all();
+      return view('articles.create', compact('tags'));
     }
     public function store()
     {
+      // dd(request()->all());
+      // dd(request()->all());
+      $this->validateArticle();
 
-      Article::create($this->validateArticle());
+      $article = new Article(request(['title', 'excerpt', 'body']));
+      $article->user_id = 1;
+      $article->save();
+
+      $article->tags()->attach(request('tags'));
 
       return redirect(route('articles.index'));
 
@@ -67,6 +75,7 @@ class ArticlesController extends Controller
         'title' => 'required',
         'excerpt' => 'required',
         'body' => 'required',
+        'tags' => 'exists:tags,id',
       ]);
     }
 }
