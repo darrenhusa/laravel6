@@ -1,0 +1,10 @@
+get /articles  index
+get /articles/1 show
+
+get /articles/create  create
+post /articles  store
+
+get /articles/1/edit edit
+put /articles/1 update
+
+delete /articles/1  destroy
